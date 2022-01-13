@@ -1,5 +1,6 @@
 import requests
 from twilio.rest import Client
+import time
 
 prefered_sites = ['Santa Clara County Fairgrounds - Parking Lot A']
 
@@ -27,6 +28,10 @@ def getAppointments():
             info[s['name']] = s['slots_left']
     return info
 
-info = getAppointments()
-print(info)
-SendSMS(info)
+while True:
+    info = getAppointments()
+    SendSMS(info)
+    if len(info) > 0:
+        time.sleep(3600)
+    else:
+        time.sleep(120)

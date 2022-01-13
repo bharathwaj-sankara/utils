@@ -9,7 +9,7 @@ def SendSMS(details):
     msg = ""
     print(details)
     for center, slots in details.items():
-        msg += "{0} slots in {1}\n".format(slots, center)
+        msg += "\n{0} slots in {1}".format(slots, center)
     client = Client(account_sid, auth_token)
     client.api.account.messages.create(
         to="+11234567890", 
@@ -25,7 +25,8 @@ def getAppointments():
     for s in status['sites']:
         if s['name'] in prefered_sites:
             info[s['name']] = s['slots_left']
-    if len(info) > 0:
-        SendSMS(info)
+    return info
 
-getAppointments()
+info = getAppointments()
+print(info)
+SendSMS(info)
